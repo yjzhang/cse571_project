@@ -1,0 +1,22 @@
+Ideas for the project:
+
+- neural networks for reinforcement learning - ex. deep Q-learning, implement playing some game... like flappy bird... or mario... see: http://www.nature.com/nature/journal/v518/n7540/full/nature14236.html
+  - which game?
+  - other methods?
+
+- something to do with sensing - kinect?
+  - RGB-D object dataset: http://rgbd-dataset.cs.washington.edu/results.html
+
+- public transportation? mobile tracking using GPS? transportation mode detection? see: http://rse-lab.cs.washington.edu/postscripts/gps-aaai-04.pdf
+  - something mobile-related
+
+- vehicle following
+  - deep learning/reinforcement learning?
+  - reinforcement learning for vehicle following using a simulation
+  - simulation
+
+Project summary:
+1. Learning a policy for vehicle following using deep reinforcement learning. Consider two vehicles, where one is following the other. We hope to use simulations and reinforcement learning in order to learn a policy for the following vehicle, so that it can follow the leader vehicle through its path. 
+
+Part 2:
+In order to transfer the policy from simulations to reality, one thing that we can do is to convert a depth image from a stereo camera or Kinect into a something...
