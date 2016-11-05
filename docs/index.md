@@ -15,5 +15,6 @@ Our plan is to learn a simple navigation system for a turtlebot. Using the [Dagg
 
 ### Goals/schedule
 
-Midterm goals: We hope to have implemented a learning algorithm and have it working in simulation.
+Midterm goals: We hope to have implemented a learning algorithm and have it working in simulation for various scenarios.
 
+End goal: We have trained the robot so that it is capable of autonomously navigating through a hallway and pass through an open doorway without hitting obstacles.
