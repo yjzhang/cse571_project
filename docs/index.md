@@ -19,9 +19,16 @@ Our plan is to learn a simple navigation system for a turtlebot. Using the [Dagg
 
 We hope to have implemented the Dagger learning algorithm and have it working in simulation for various scenarios.
 
-1. Start working with the turtlebot, and understand how to control it and how to save data from its sensors.
-2. Implement the Dagger algorithm in simple simulated scenarios. One simple scenario is a scenario where the goal is to navigate a circular path through a track.
+1. Implement the Dagger algorithm in simple simulated scenarios. One simple scenario is a scenario where the goal is to navigate a circular path through a track. Another simple scenario is for one robot to pursue another robot.
+2. Start working with the turtlebot, and understand how to control it and how to save data from its sensors. Finish the basic Turtlebot tutorials.
+3. Save a sequence of depth images from the Turtlebot's kinect sensors.
+4. Create a program that can send movement commands to the Turtlebot.
 
 #### End goal
 
 We have trained the robot so that it is capable of autonomously navigating through a hallway and pass through an open doorway without hitting obstacles.
+
+### Division of labor
+
+All of us are working with the turtlebot, and we are all learning how to run controls on it.
+
