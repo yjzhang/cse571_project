@@ -41,3 +41,8 @@ We have trained the robot so that it is capable of autonomously navigating throu
 
 All of us are working with the turtlebot, and we are all learning how to run controls on it.
 
+Robot sensing & control: Keshav 
+
+Robot control, Gazebo turtlebot simulation: James
+
+Dagger implementation, simulation: Yue

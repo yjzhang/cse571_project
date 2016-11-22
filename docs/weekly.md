@@ -4,15 +4,22 @@ title: Weekly Progress
 description: Weekly Progress
 ---
 
-### 11/1
+### 10/31
 
-Project selection, literature review
+- project selection
+- literature review
 
-### 11/8
+### 11/7
 
-### 11/15
+- further literature review
+- simple simulations for Dagger algorithm
 
-### 11/22
+### 11/14
 
+- learning how to use the robot - control and sensing
+- dagger implementation
 
+### 11/21
+
+- robot programming - controlling using scripts
 
