@@ -12,14 +12,14 @@ description: Weekly Progress
 ### 11/7
 
 - further literature review
-- simple simulations for Dagger algorithm
+- simple simulations for Dagger algorithm - [python vehicle sim for pursuit problem](https://github.com/yjzhang/cse571_project/tree/master/vehicle_sim), [matlab vehicle sim for wall following](https://github.com/yjzhang/cse571_project/tree/master/matlab_sim)
 
 ### 11/14
 
-- learning how to use the robot - control and sensing
-- dagger implementation
+- learning how to use the robot - control and sensing - following [tutorials](http://learn.turtlebot.com/)
+- dagger implementation for pursuit problem - [python](https://github.com/yjzhang/cse571_project/tree/master/vehicle_sim)
+- training for pursuit problem
 
 ### 11/21
 
 - robot programming - controlling using scripts
-

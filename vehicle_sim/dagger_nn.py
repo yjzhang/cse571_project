@@ -75,3 +75,5 @@ class NNDaggerModel(DaggerModel):
     def load(self, file_prefix='nn_dagger'):
         self.model1 = model_from_json(open(file_prefix+'_model.json').read())
         self.model1.load_weights(file_prefix+'_weights.h5')
+        self.model1.compile(loss='categorical_crossentropy',
+                              optimizer='adam')
