@@ -64,6 +64,10 @@ class NNDaggerModel(DaggerModel):
         state = np.concatenate((state[0:2] - state[5:7], state[2:3], state[7:8]))
         action = self.model1.predict_classes(np.reshape(state, (1, 4)), verbose=0)
         action = action[0]
+        #action = self.model1.predict(np.reshape(state, (1, 4)), verbose=0)[0]
+        #print sum(action/(sum(action)+0.000001))
+        #action = np.argmax(np.random.multinomial(1, action/(sum(action)+0.000001)))
+        #print action
         return decode_action(action)
 
     def save(self, file_prefix='nn_dagger'):

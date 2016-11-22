@@ -31,6 +31,8 @@ if __name__ == '__main__':
     # results: 1 for success, 0 for failure
     results = []
     while 1:
+        pygame.image.save(screen,
+                '/home/yjzhang/Grad_School/course_data/cse571_data/img_{0:03d}_{1:03d}.jpg'.format(iterations, steps))
         current_time = pygame.time.get_ticks()
         # update vehicle1 control (user)
         state = (vehicle1.state(), vehicle2.state())

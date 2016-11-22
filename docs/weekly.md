@@ -17,8 +17,8 @@ description: Weekly Progress
 ### 11/14
 
 - learning how to use the robot - control and sensing - following [tutorials](http://learn.turtlebot.com/)
-- dagger implementation for pursuit problem - [python](https://github.com/yjzhang/cse571_project/tree/master/vehicle_sim)
-- training for pursuit problem
+- neural network dagger implementation for pursuit scenario - [python](https://github.com/yjzhang/cse571_project/tree/master/vehicle_sim)
+- training for pursuit scenario
 
 ### 11/21
 
