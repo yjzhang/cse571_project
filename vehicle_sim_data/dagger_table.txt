@@ -1,0 +1,4 @@
+dagger_nn	87
+dagger_lookback_nn	59
+expert_nn	70
+expert_lookback_nn	14
