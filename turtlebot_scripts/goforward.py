@@ -55,8 +55,7 @@ class GoForward():
             self.cmd_vel.publish(move_cmd)
 	    # wait for 0.1 seconds (10 HZ) and publish again
             r.sleep()
-                        
-        
+
     def shutdown(self):
         # stop turtlebot
         rospy.loginfo("Stop TurtleBot")
