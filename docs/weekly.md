@@ -23,3 +23,11 @@ description: Weekly Progress
 ### 11/21
 
 - robot programming - controlling using scripts
+- reading LIDAR sensory data
+- presentation
+
+### 11/28
+
+- comparison of dagger with expert-only imitation learning
+- read sensor data in simulation using python
+- implement DeepQ for the simple pursuit simulation
