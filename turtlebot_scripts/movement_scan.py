@@ -59,6 +59,7 @@ class GoForward():
                 state = self.previous_data.ranges
             else:
                 state = []
+            print state
             control = self.controller.next_action(state)
             print control
             if 'FWD' in control:
