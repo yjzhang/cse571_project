@@ -51,10 +51,15 @@ class GoForward():
         self.control = 'user'
         move_cmd = Twist()
         while not rospy.is_shutdown():
+            if self.previous_data:
+                state = self.previous_data.intensities
+            else:
+                state = []
             if self.control=='user':
                 m=int(input("Enter a number: "))
             else:
                 m=model.action(self.previous_data.intensities)
+            print state
             #c+=1
             if m == 8:
                 # let's go forward at 0.2 m/s
@@ -104,6 +109,11 @@ class GoForward():
             # as long as you haven't ctrl + c keeping doing...
             # publish the velocity
             self.cmd_vel.publish(move_cmd)
+            self.control_history.append(move_cmd)
+            self.action_history.append(move_cmd)
+            self.state_history.append(state)
+            print state
+            print self.control_history
             # wait for 0.1 seconds (10 HZ) and publish again
             r.sleep()
 
@@ -122,8 +132,6 @@ class GoForward():
         rospy.sleep(1)
 
 if __name__ == '__main__':
-    try:
-        GoForward()
-    except:
-        rospy.loginfo("GoForward node terminated.")
+        GoForward(model=None)
+        #rospy.loginfo("GoForward node terminated.")
 

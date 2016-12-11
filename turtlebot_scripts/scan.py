@@ -44,6 +44,8 @@ class BasicController():
     def get_command(self):
         """
         Gets the movement command given the scan data (state).
+
+        TODO: use
         """
         data = self.previous_data
         print data.ranges
