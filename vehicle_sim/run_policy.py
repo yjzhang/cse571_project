@@ -13,7 +13,7 @@ def reset_sim():
     vehicle2.pos = np.array([100.0+random.randint(-400, 400),
         100.0+random.randint(-400, 400)])
 
-model = 'nn_expert_lookback'
+model = 'nn_dagger'
 
 if __name__ == '__main__':
     # set time to 15ms/tick
@@ -50,8 +50,8 @@ if __name__ == '__main__':
         #print vehicle1.state()
         # display vehicle1
         screen.fill((0,0,0))
-        vehicle1.draw(screen, main_pos=vehicle1.pos)
-        vehicle2.draw(screen, main_pos=vehicle1.pos)
+        vehicle1.draw(screen)#, main_pos=vehicle1.pos)
+        vehicle2.draw(screen)#, main_pos=vehicle1.pos)
         pygame.display.flip()
         if vehicle1.detect_collision(vehicle2):
             iterations += 1

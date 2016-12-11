@@ -1,7 +1,7 @@
 import numpy as np
 
-from keras.models import Sequential, model_from_json
-from keras.layers import Convolution1D, LSTM, GRU, Dense, Activation, Dropout, MaxPooling1D, Flatten, GlobalAveragePooling1D
+from keras.models import Model, model_from_json
+from keras.layers import Convolution1D, Masking, Merge, Dense, Activation, Dropout, MaxPooling1D, Flatten, GlobalAveragePooling1D, Input
 from keras.callbacks import EarlyStopping
 
 from dagger import DaggerModel
@@ -42,15 +42,23 @@ class DeepQModel(DaggerModel):
     """
 
     def __init__(self, model_file=None, model_params=None):
-        self.model1 = Sequential()
-        self.model1.add(Dense(50, input_dim=4))
-        self.model1.add(Activation('sigmoid'))
-        self.model1.add(Dense(32))
-        self.model1.add(Activation('sigmoid'))
-        self.model1.add(Dense(9))
+        main_input = Input(shape=(4,))
+        masking_input = Input(shape=(1,))
+        l1 = Dense(50, input_dim=4)(main_input)
+        l2 = Activation('sigmoid')(l1)
+        l3 = Dense(32)(l2)
+        output_layers = []
+        # one output for each action
+        for i in range(9):
+            output_layers.append(Dense(1)(l3))
+        output_layers.append(Masking(mask_value=0)(masking_input))
+        # note: see https://github.com/fchollet/keras/issues/3206
+        output2 = Merge(output_layers, mode=lambda xs: xs[0], output_mask=lambda xs: xs[1])
+        self.model1 = Model(input=[main_input, masking_input], output=output2)
+        # TODO: add a masking layer...
         # output is the Q-value for each action.
         self.model1.compile(loss='mean_squared_error',
-                              optimizer='adam')
+                              optimizer='rmsprop')
         self.old_states = []
         self.old_actions = []
         self.old_rewards = []
@@ -59,9 +67,19 @@ class DeepQModel(DaggerModel):
     def get_q_value(self, state, action, reward, state_is_terminal=False):
         """
         Gets the Q-value for one particular action
+        state is a 4-d np array
+        action is a 9-d np array
 
-        if the state is a terminal state:
+        if the state is a terminal state: the q-value is just the reward.
+        Otherwise, return the reward plus the discounted Q-value of
+        the state-action pair.
         """
+        if state_is_terminal:
+            return reward
+        else:
+            next_q = self.model1.predict(np.reshape(state, (1,4)), verbose=0)
+            next_q = next_q[0][np.argmax(action)]
+            return reward + self.discount*next_q
 
     def train(self, states, actions, rewards):
         """
@@ -75,6 +93,12 @@ class DeepQModel(DaggerModel):
         self.old_actions = self.old_actions + actions
         states = np.vstack(self.old_states)
         actions = np.vstack([encode_action(a) for a in self.old_actions])
+        q_values = [self.get_q_value(s, a, r) for s, a, r in zip(states, actions, rewards)]
+        for i in range(9):
+            """
+            Have a separate training round for each action...???
+            """
+            pass
         #early_stopping = EarlyStopping(monitor='val_loss', patience=2)
         # TODO: create a 9-d map of rewards and actions
         # actually, no, actions to q-values for each position...
