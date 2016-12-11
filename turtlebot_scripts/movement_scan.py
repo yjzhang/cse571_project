@@ -15,9 +15,13 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 # On work station:
 # python goforward.py
 
+import pygame
+
 import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
+
+import vehicle_controller
 
 class GoForward():
     def __init__(self, model):
@@ -36,10 +40,7 @@ class GoForward():
         self.scan = rospy.Subscriber('/scan', LaserScan, self.scan_callback)
 
         self.previous_data = None
-        self.control_history = []
-        self.action_history = []
-        self.state_history = []
-        self.model = model
+        self.controller = vehicle_controller.DaggerPursuitController(None)
 
     #TurtleBot will stop if we don't keep telling it to move.  How often should we tell it to move? 10 HZ
         r = rospy.Rate(10);
@@ -50,70 +51,29 @@ class GoForward():
         # Twist is a datatype for velocity
         self.control = 'user'
         move_cmd = Twist()
+        pygame.display.set_mode((200,200))
         while not rospy.is_shutdown():
+            move_cmd.linear.x = 0
+            move_cmd.angular.z = 0
             if self.previous_data:
                 state = self.previous_data.ranges
             else:
                 state = []
-            if self.control=='user':
-                m=int(input("Enter a number: "))
-            else:
-                m=model.action(self.previous_data.ranges)
-            print state
-            #c+=1
-            if m == 8:
-                # let's go forward at 0.2 m/s
+            control = self.controller.next_action(state)
+            print control
+            if 'FWD' in control:
                 move_cmd.linear.x = 1.2
-            # let's turn at 0 radians/s
-                move_cmd.angular.z = 0
-            if m == 2:
-                # let's go forward at -0.2 m/s
-                move_cmd.linear.x = -1.2
-                # let's turn at 0 radians/s
-                move_cmd.angular.z = 0
-            if m==6:
-                # let's go forward at -0.2 m/s
-                move_cmd.linear.x = 0
-                # let's turn at 0 radians/s
-                move_cmd.angular.z = 3.0    
-            if m==4: 
-                # let's go forward at -0.2 m/s
-                move_cmd.linear.x = 0
-                # let's turn at 0 radians/s
-                move_cmd.angular.z = -3.0    
-            if m==5: 
-                # let's go forward at -0.2 m/s
-                move_cmd.linear.x = 0
-                # let's turn at 0 radians/s
-                move_cmd.angular.z = 0
-            if m==1: 
-                # let's go forward at -0.2 m/s
-                move_cmd.linear.x = -1.2
-                # let's turn at 0 radians/s
-                move_cmd.angular.z = -3
-            if m==3: 
-                # let's go forward at -0.2 m/s
-                move_cmd.linear.x = -1.2
-                # let's turn at 0 radians/s
+            if 'LEFT' in control:
                 move_cmd.angular.z = 3
-            if m==7:
-                # let's go forward at -0.2 m/s
-                move_cmd.linear.x = 1.2
-                # let's turn at 0 radians/s
+            if 'DOWN' in control:
+                move_cmd.linear.x = -1.2
+            if 'RIGHT' in control:
                 move_cmd.angular.z = -3
-            if m==9:
-                # let's go forward at -0.2 m/s
-                move_cmd.linear.x = 1.2
-                # let's turn at 0 radians/s
-                move_cmd.angular.z = 3
             # as long as you haven't ctrl + c keeping doing...
             # publish the velocity
             self.cmd_vel.publish(move_cmd)
-            self.control_history.append(move_cmd)
-            self.action_history.append(move_cmd)
-            self.state_history.append(state)
+            print move_cmd
             print 'len(state): ', len(state)
-            print self.control_history
             # wait for 0.1 seconds (10 HZ) and publish again
             r.sleep()
 
