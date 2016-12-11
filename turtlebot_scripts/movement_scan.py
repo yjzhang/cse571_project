@@ -62,11 +62,11 @@ class GoForward():
             control = self.controller.next_action(state)
             print control
             if 'FWD' in control:
-                move_cmd.linear.x = 1.2
+                move_cmd.linear.x = 0.5
             if 'LEFT' in control:
                 move_cmd.angular.z = 3
             if 'BACK' in control:
-                move_cmd.linear.x = -1.2
+                move_cmd.linear.x = -0.5
             if 'RIGHT' in control:
                 move_cmd.angular.z = -3
             # as long as you haven't ctrl + c keeping doing...
