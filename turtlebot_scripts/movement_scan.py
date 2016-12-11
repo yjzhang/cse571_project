@@ -52,13 +52,13 @@ class GoForward():
         move_cmd = Twist()
         while not rospy.is_shutdown():
             if self.previous_data:
-                state = self.previous_data.intensities
+                state = self.previous_data.ranges
             else:
                 state = []
             if self.control=='user':
                 m=int(input("Enter a number: "))
             else:
-                m=model.action(self.previous_data.intensities)
+                m=model.action(self.previous_data.ranges)
             print state
             #c+=1
             if m == 8:
@@ -112,7 +112,7 @@ class GoForward():
             self.control_history.append(move_cmd)
             self.action_history.append(move_cmd)
             self.state_history.append(state)
-            print state
+            print 'len(state): ', len(state)
             print self.control_history
             # wait for 0.1 seconds (10 HZ) and publish again
             r.sleep()

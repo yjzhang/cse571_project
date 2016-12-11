@@ -39,6 +39,7 @@ class BasicController():
         """
         The data is of the type LaserScan.
         """
+        print data
         self.previous_data = data
 
     def get_command(self):
@@ -49,7 +50,6 @@ class BasicController():
         """
         data = self.previous_data
         print data.ranges
-        print data.intensities
         # Twist is a datatype for velocity
         move_cmd = Twist()
 	# let's go forward at 0.2 m/s
@@ -63,7 +63,7 @@ class BasicController():
         Runs the main loop
         """
         while not rospy.is_shutdown():
-            cmd = self.get_command()
+            #cmd = self.get_command()
             #self.cmd_vel.publish(move_cmd)
             self.r.sleep()
 
@@ -76,9 +76,7 @@ class BasicController():
         rospy.sleep(1)
  
 if __name__ == '__main__':
-    try:
         s = BasicController()
         s.run()
-    except:
         rospy.loginfo("BasicController node terminated.")
 
