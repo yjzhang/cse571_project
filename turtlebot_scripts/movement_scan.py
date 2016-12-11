@@ -25,7 +25,8 @@ from sensor_msgs.msg import LaserScan
 import vehicle_controller
 import dagger_nn
 
-SAVE_FILE='../turtlebot_data/nn_dagger'
+# nn_dagger_kinect or nn_dagger_hokuyo
+SAVE_FILE='../turtlebot_data/nn_dagger_kinect'
 
 def subsample(scan):
     """

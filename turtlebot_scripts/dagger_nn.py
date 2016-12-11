@@ -34,24 +34,30 @@ class NNDaggerModel(object):
 
     def __init__(self, save_file_prefix=None):
         if save_file_prefix:
-            self.load(save_file_prefix)
-            self.load_train_data(save_file_prefix)
+            try:
+                self.load(save_file_prefix)
+                self.load_train_data(save_file_prefix)
+            except:
+                self.new_model()
         else:
-            self.model1 = Sequential()
-            self.model1.add(Convolution1D(100, 4, border_mode='same', input_dim=1, input_length=STATE_LENGTH))
-            self.model1.add(Activation('relu'))
-            self.model1.add(MaxPooling1D(pool_length=2))
-            #self.model1.add(Convolution1D(50, 4))
-            #self.model1.add(Activation('relu'))
-            self.model1.add(Flatten())
-            self.model1.add(Dense(50))
-            self.model1.add(Activation('sigmoid'))
-            self.model1.add(Dense(9))
-            self.model1.add(Activation('sigmoid'))
-            self.model1.compile(loss='categorical_crossentropy',
-                                  optimizer='adam')
-            self.old_states = []
-            self.old_actions = []
+            self.new_model()
+
+    def new_model(self):
+        self.model1 = Sequential()
+        self.model1.add(Convolution1D(100, 4, border_mode='same', input_dim=1, input_length=STATE_LENGTH))
+        self.model1.add(Activation('relu'))
+        self.model1.add(MaxPooling1D(pool_length=2))
+        #self.model1.add(Convolution1D(50, 4))
+        #self.model1.add(Activation('relu'))
+        self.model1.add(Flatten())
+        self.model1.add(Dense(50))
+        self.model1.add(Activation('sigmoid'))
+        self.model1.add(Dense(9))
+        self.model1.add(Activation('sigmoid'))
+        self.model1.compile(loss='categorical_crossentropy',
+                              optimizer='adam')
+        self.old_states = []
+        self.old_actions = []
 
     def train(self, states, controls, actions):
         """
