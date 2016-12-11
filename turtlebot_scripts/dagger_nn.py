@@ -24,8 +24,8 @@ def decode_action(action):
     output[1] = action/3
     return output
 
-# number of points in a state - 512/10=51 for hokuyo, 640/10=64 for kinect
-STATE_LENGTH=64
+# number of points in a state - 520/10=52 for hokuyo, 640/10=64 for kinect
+STATE_LENGTH=52
 
 class NNDaggerModel(object):
     """
