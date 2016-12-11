@@ -83,7 +83,7 @@ class GoForward():
         r = rospy.Rate(10);
 
         # Twist is a datatype for velocity
-        self.controller.control = 'policy_learn'
+        self.controller.control = 'policy'
         move_cmd = Twist()
         pygame.display.set_mode((200,200))
         # steps: the number of frames per round
@@ -116,10 +116,6 @@ class GoForward():
             print 'len(state): ', len(state)
             # wait for 0.1 seconds (10 HZ) and publish again
             r.sleep()
-            if steps==500:
-                steps = 0
-                rounds += 1
-                reset(self.controller)
 
     def scan_callback(self, data):
         """
