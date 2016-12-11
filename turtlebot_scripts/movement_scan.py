@@ -25,6 +25,8 @@ from sensor_msgs.msg import LaserScan
 import vehicle_controller
 import dagger_nn
 
+SAVE_FILE='../turtlebot_data/nn_dagger'
+
 def subsample(scan):
     """
     Takes every 10th point of the scan.
@@ -47,7 +49,7 @@ def reset(controller):
     controller.train()
     controller.model.save()
     controller.model.save_train_data()
-    if np.random.rand()<0.99:
+    if np.random.rand()<0.5:
         print 'control: policy_learn'
         controller.control = 'policy_learn'
     else:
@@ -71,7 +73,7 @@ class GoForward():
         self.scan = rospy.Subscriber('/scan', LaserScan, self.scan_callback)
 
         self.previous_data = None
-        self.model = dagger_nn.NNDaggerModel()
+        self.model = dagger_nn.NNDaggerModel(save_file_prefix=SAVE_FILE)
         self.controller = vehicle_controller.DaggerPursuitController(None)
         self.controller.model = self.model
 
