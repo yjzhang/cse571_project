@@ -13,15 +13,46 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 # On TurtleBot:
 # roslaunch turtlebot_bringup minimal.launch
 # On work station:
-# python goforward.py
+# python movement_scan.py
 
 import pygame
+import numpy as np
 
 import rospy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import LaserScan
 
 import vehicle_controller
+import dagger_nn
+
+def subsample(scan):
+    """
+    Takes every 10th point of the scan.
+    """
+    new_scan = [scan[i] for i in range(0, len(scan), 10)]
+    return new_scan
+
+def remove_inf(scan):
+    """
+    Converts all inf points to 100.
+    """
+    def convert(n):
+        if np.isinf(n) or np.isnan(n):
+            return 0.0
+        else:
+            return n
+    return map(convert, scan)
+
+def reset(controller):
+    controller.train()
+    controller.model.save()
+    controller.model.save_train_data()
+    if np.random.rand()<0.99:
+        print 'control: policy_learn'
+        controller.control = 'policy_learn'
+    else:
+        print 'control: user'
+        controller.control = 'user'
 
 class GoForward():
     def __init__(self, model):
@@ -40,23 +71,27 @@ class GoForward():
         self.scan = rospy.Subscriber('/scan', LaserScan, self.scan_callback)
 
         self.previous_data = None
+        self.model = dagger_nn.NNDaggerModel()
         self.controller = vehicle_controller.DaggerPursuitController(None)
+        self.controller.model = self.model
 
-    #TurtleBot will stop if we don't keep telling it to move.  How often should we tell it to move? 10 HZ
+        #TurtleBot will stop if we don't keep telling it to move.  How often should we tell it to move? 10 HZ
         r = rospy.Rate(10);
-    #myList=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,2,2,2,2,2,2,2,2,2,3,3,3,3,3,1,1,1,1,1,1,1,1,5,5,5,5,4,4,4,4,4]
-
-    #c= 0        
 
         # Twist is a datatype for velocity
         self.control = 'user'
         move_cmd = Twist()
         pygame.display.set_mode((200,200))
+        # steps: the number of frames per round
+        steps = 0
+        # rounds: the number of times training is done
+        rounds = 0
         while not rospy.is_shutdown():
+            steps += 1
             move_cmd.linear.x = 0
             move_cmd.angular.z = 0
             if self.previous_data:
-                state = self.previous_data.ranges
+                state = remove_inf(subsample(self.previous_data.ranges))
             else:
                 state = []
             print state
@@ -77,6 +112,10 @@ class GoForward():
             print 'len(state): ', len(state)
             # wait for 0.1 seconds (10 HZ) and publish again
             r.sleep()
+            if steps==500:
+                steps = 0
+                rounds += 1
+                reset(self.controller)
 
     def scan_callback(self, data):
         """
