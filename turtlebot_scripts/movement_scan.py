@@ -65,7 +65,7 @@ class GoForward():
                 move_cmd.linear.x = 1.2
             if 'LEFT' in control:
                 move_cmd.angular.z = 3
-            if 'DOWN' in control:
+            if 'BACK' in control:
                 move_cmd.linear.x = -1.2
             if 'RIGHT' in control:
                 move_cmd.angular.z = -3
