@@ -34,5 +34,6 @@ description: Weekly Progress
 
 ### 12/04
 
-- implement NN-Dagger on Gazebo and the turtlebot
+- implement NN-Dagger on Gazebo and the turtlebot - [code](https://github.com/yjzhang/cse571_project/tree/master/turtlebot_scripts)
 - train turtlebot to navigate hallways and make right turns
+- explored using NN-Dagger for mapping and pursuit

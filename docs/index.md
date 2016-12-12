@@ -37,6 +37,14 @@ We have trained the robot so that it is capable of autonomously navigating throu
 1. Create a program that can send movement commands (given depth images) to the Turtlebot.
 2. Train a policy using Dagger for the Turtlebot.
 
+### Simulation results
+
+We trained the simulated red robot to pursue the white robot. A video of the trained model can be found [here](https://www.youtube.com/watch?v=ytJ5xMHiSXg).
+
+### Robot results
+
+We trained the Turtlebot using Dagger to navigate hallways using Hokuyo laser depth scan data. A video of the training process and the trained model can be found [here](https://www.youtube.com/watch?v=vIecKpOrEtQ).
+
 ### Division of labor
 
 All of us are working with the turtlebot, and we are all learning how to run controls on it.
