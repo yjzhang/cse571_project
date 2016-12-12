@@ -49,9 +49,9 @@ def remove_inf(scan):
 
 def reset(controller):
     controller.train()
-    controller.model.save()
-    controller.model.save_train_data()
-    if np.random.rand()<0.99:
+    controller.model.save(file_prefix=SAVE_FILE)
+    controller.model.save_train_data(file_prefix=SAVE_FILE)
+    if np.random.rand()<0.75:
         print 'control: policy_learn'
         controller.control = 'policy_learn'
     else:
@@ -98,7 +98,7 @@ class GoForward():
                 state = remove_inf(subsample(self.previous_data.ranges))
             else:
                 state = []
-            print state
+            #print state
             control = self.controller.next_action(state)
             print control
             if 'FWD' in control:
@@ -112,8 +112,8 @@ class GoForward():
             # as long as you haven't ctrl + c keeping doing...
             # publish the velocity
             self.cmd_vel.publish(move_cmd)
-            print move_cmd
-            print 'len(state): ', len(state)
+            #print move_cmd
+            #print 'len(state): ', len(state)
             # wait for 0.1 seconds (10 HZ) and publish again
             r.sleep()
             if steps==500:
