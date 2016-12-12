@@ -31,3 +31,8 @@ description: Weekly Progress
 - comparison of dagger with expert-only imitation learning
 - read sensor data in simulation using python
 - implement DeepQ for the simple pursuit simulation
+
+### 12/04
+
+- implement NN-Dagger on Gazebo and the turtlebot
+- train turtlebot to navigate hallways and make right turns
