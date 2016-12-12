@@ -150,6 +150,8 @@ class DaggerPursuitController(VehicleController):
             control.append('BACK')
         if keys[pygame.K_RIGHT]:
             control.append('RIGHT')
+        if keys[pygame.K_x]:
+            control.append('x')
         if self.control=='policy_learn':
             self.state_history.append(state)
             action = vecs_to_action(self.model.action(state,

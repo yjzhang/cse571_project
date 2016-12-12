@@ -109,6 +109,10 @@ class GoForward():
                 move_cmd.linear.x = -0.5
             if 'RIGHT' in control:
                 move_cmd.angular.z = -3
+            if 'x' in control:
+                steps = 0
+                rounds += 1
+                reset(self.controller)
             # as long as you haven't ctrl + c keeping doing...
             # publish the velocity
             self.cmd_vel.publish(move_cmd)
