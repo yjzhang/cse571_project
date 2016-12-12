@@ -113,6 +113,7 @@ class GoForward():
                 steps = 0
                 rounds += 1
                 reset(self.controller)
+                continue
             # as long as you haven't ctrl + c keeping doing...
             # publish the velocity
             self.cmd_vel.publish(move_cmd)
