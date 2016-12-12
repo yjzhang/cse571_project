@@ -100,7 +100,7 @@ class GoForward():
                 state = []
             #print state
             control = self.controller.next_action(state)
-            print control
+            #print control
             if 'FWD' in control:
                 move_cmd.linear.x = 0.5
             if 'LEFT' in control:
