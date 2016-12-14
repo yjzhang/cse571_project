@@ -41,6 +41,10 @@ We have trained the robot so that it is capable of autonomously navigating throu
 
 We trained the simulated red robot to pursue the white robot. A video of the trained model can be found [here](https://www.youtube.com/watch?v=ytJ5xMHiSXg).
 
+### Gazebo results
+
+The Gazebo simulation provides the entire API for the Turtlebot, with simulated controls and sensory data. We trained Dagger for a few rounds to avoid obstacles. [Video](https://www.youtube.com/watch?v=Ug4MrcJSvWA)
+
 ### Robot results
 
 We trained the Turtlebot using Dagger to navigate hallways using Hokuyo laser depth scan data. A video of the training process and the trained model can be found [here](https://www.youtube.com/watch?v=vIecKpOrEtQ).
